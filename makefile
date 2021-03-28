@@ -1,5 +1,5 @@
 # Defines the C compiler
-CC := GCC
+CC := gcc
 
 # Protection for stack-smashing attack
 STACK := -fstack-protector-all -Wstack-protector
@@ -42,7 +42,7 @@ default: all
 # Help message
 help:
 	@echo "Object-oriented C"
-	@echo "    all      - Compiles and generates binary files"
+	@echo "    all		- Compiles and generates binary files"
 	@echo "    clean    - Clean the project by removing binaries"
 	@echo "    help     - Prints a help message with target rules"
 
