@@ -3,12 +3,15 @@
 #include "Interface.h"
 
 int main() {
-    Interface I;
-    I.setNextPhase = setNextPhase;
+    setbuf(stdout, NULL);
+    World w;
+    initWorld(&w);
+
+    Interface interface;
+    initInterface(&interface, &w);
+
     printf("Hello world!\n");
 
-    I.setNextPhase(&I, 10);
-
-    printf("nextPhase = %i\n", I.nextPhase);
+    printf("nextPhase = %i\n", interface.nextPhase);
     return 0;
 }
