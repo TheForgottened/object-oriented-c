@@ -55,4 +55,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+# VS Code config folder that automatically generates and it's annoying (added by me)
+.vscode/
+
 # End of https://www.toptal.com/developers/gitignore/api/c
