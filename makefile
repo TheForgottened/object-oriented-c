@@ -7,8 +7,11 @@ STACK := -fstack-protector-all -Wstack-protector
 # Specifies to GCC the required warnings
 WARNS := -Wall -Wextra -pedantic # -pedantic warns on language standards
 
+# Debug flags (add to CFLAGS if you wish to compile the program for debug porpuses)
+DEBUG := -g -fsanitize=address 
+
 # Flags for compiling
-CFLAGS := -O3 $(STACK) $(WARNS)
+CFLAGS := -O3 $(STACK) $(WARNS) $(DEBUG)
 
 # Color prefix for Linux distributions
 COLOR_PREFIX := e
