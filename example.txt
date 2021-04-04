@@ -1,0 +1,10 @@
+create mountain 2
+create mine 2
+create castle 2
+create dune 2
+create plain 3
+create castle 0
+create fort 1
+create refuge 1
+create fishery 2
+create random 1

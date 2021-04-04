@@ -1,0 +1,89 @@
+-en [0;33mCC [0m
+gcc -c src/Territory.c -o lib/Territory.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+src/Territory.c: In function ‘refresh_Territory’:
+src/Territory.c:50:48: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   50 | errcode refresh_Territory(Territory* this, int turn) {
+      |                                            ~~~~^~~~
+-en [0;33mCC [0m
+gcc -c src/Interface.c -o lib/Interface.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+src/Interface.c: In function ‘run_Interface’:
+src/Interface.c:412:27: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  412 |             for (i = 0; i < strlen(input[2]); i++) {
+      |                           ^
+src/Interface.c:767:27: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+  767 |             for (i = 0; i < strlen(input[2]); i++) {
+      |                           ^
+src/Interface.c: In function ‘askForCommands_Interface’:
+src/Interface.c:344:9: warning: ignoring return value of ‘fgets’, declared with attribute warn_unused_result [-Wunused-result]
+  344 |         fgets(input, sizeof(input), stdin);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/Interface.c: In function ‘run_Interface’:
+src/Interface.c:572:25: warning: ignoring return value of ‘scanf’, declared with attribute warn_unused_result [-Wunused-result]
+  572 |                         scanf("%c", &c);
+      |                         ^~~~~~~~~~~~~~~
+src/Interface.c:637:25: warning: ignoring return value of ‘scanf’, declared with attribute warn_unused_result [-Wunused-result]
+  637 |                         scanf("%c", &c);
+      |                         ^~~~~~~~~~~~~~~
+src/Interface.c:673:25: warning: ignoring return value of ‘scanf’, declared with attribute warn_unused_result [-Wunused-result]
+  673 |                         scanf("%c", &c);
+      |                         ^~~~~~~~~~~~~~~
+-en [0;33mCC [0m
+gcc -c src/Save.c -o lib/Save.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/Refuge.c -o lib/Refuge.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/Codes.c -o lib/Codes.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/Fort.c -o lib/Fort.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/Tech.c -o lib/Tech.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/Continent.c -o lib/Continent.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/InitialTerr.c -o lib/InitialTerr.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/World.c -o lib/World.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+src/World.c: In function ‘endGame_World’:
+src/World.c:53:9: warning: passing argument 1 to restrict-qualified parameter aliases with argument 4 [-Wrestrict]
+   53 |         snprintf(str, size, "%s\n\nPontuacao total final: %i", str, points);
+      |         ^~~~~~~~
+src/World.c: In function ‘infoEndGame_World’:
+src/World.c:251:31: warning: unused parameter ‘this’ [-Wunused-parameter]
+  251 | void infoEndGame_World(World* this, char* str) {
+      |                        ~~~~~~~^~~~
+-en [0;33mCC [0m
+gcc -c src/Mine.c -o lib/Mine.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/Mountain.c -o lib/Mountain.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+src/Mountain.c: In function ‘refresh_Mountain’:
+src/Mountain.c:9:47: warning: unused parameter ‘round’ [-Wunused-parameter]
+    9 | errcode refresh_Mountain(Territory* this, int round) {
+      |                                           ~~~~^~~~~
+-en [0;33mCC [0m
+gcc -c src/Fishery.c -o lib/Fishery.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/main.c -o lib/main.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/Plain.c -o lib/Plain.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/Empire.c -o lib/Empire.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/Island.c -o lib/Island.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/Dune.c -o lib/Dune.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/Castle.c -o lib/Castle.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/Command.c -o lib/Command.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en [0;33mCC [0m
+gcc -c src/utils.c -o lib/utils.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+src/utils.c: In function ‘resetString’:
+src/utils.c:30:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+   30 |     for (i = 0; i < strlen(str) + 1; i++) {
+      |                   ^
+-en [0;33mLD [0m
+gcc -o bin/ooc lib/Territory.o lib/Interface.o lib/Save.o lib/Refuge.o lib/Codes.o lib/Fort.o lib/Tech.o lib/Continent.o lib/InitialTerr.o lib/World.o lib/Mine.o lib/Mountain.o lib/Fishery.o lib/main.o lib/Plain.o lib/Empire.o lib/Island.o lib/Dune.o lib/Castle.o lib/Command.o lib/utils.o -O3 -fstack-protector-all -Wstack-protector -Wall -Wextra -pedantic  -g -fsanitize=address  
+-en 
+--
+Binary file placed at [0;33mbin/ooc[0m
+

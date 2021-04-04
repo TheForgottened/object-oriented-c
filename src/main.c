@@ -10,8 +10,7 @@ int main() {
     Interface interface;
     initInterface(&interface, &w);
 
-    printf("Hello world!\n");
-
-    printf("nextPhase = %i\n", interface.nextPhase);
+    disposeInterface(&interface);
+    disposeWorld(&w);
     return 0;
 }

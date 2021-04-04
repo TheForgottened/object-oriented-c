@@ -1,70 +1,62 @@
 #include "Command.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#include <stdlib.h>
+
+char* getName_Command(Command* this) {
+    return this->name;
+}
+
+char* getDescr_Command(Command* this) {
+    return this->descr;
+}
+
+char* getArgs_Command(Command* this) {
+    return this->args;
+}
+
+void setAvailability_Command(Command* this, bool b) {
+    this->available = b;
+}
+
+bool isAvailable_Command(Command* this) {
+    return this->available;
+}
+
+void print_Command(Command* this) {
+    printf("Command: %s %s\nAvailable: %i\nDescription: %s", 
+    this->getName(this), this->getArgs(this), this->isAvailable(this), this->getDescr(this));
+}
 
 void initCommand(Command* this, char* name, char* descr, char* args) {
+    size_t size;
+
     // Functions
-    this->getName = getName;
-    this->getDescr = getDescr;
-    this->getArgs = getArgs;
-    this->setAvailability = setAvailability;
-    this->isAvailable = isAvailable;
-    this->getAsString = getAsString;
+    this->getName = getName_Command;
+    this->getDescr = getDescr_Command;
+    this->getArgs = getArgs_Command;
+    this->setAvailability = setAvailability_Command;
+    this->isAvailable = isAvailable_Command;
+    this->print = print_Command;
 
-    this->name = malloc((strlen(name) + 1) * sizeof(char));
-    strcpy(this->name, name);
+    size = (strlen(name) + 1) * sizeof(char);
+    this->name = malloc(size);
+    strncpy(this->name, name, size);
 
-    this->descr = malloc((strlen(descr) + 1) * sizeof(char));
-    strcpy(this->descr, descr);
+    size = (strlen(descr) + 1) * sizeof(char);
+    this->descr = malloc(size);
+    strncpy(this->descr, descr, size);
 
-    this->args = malloc((strlen(args) + 1) * sizeof(char));
-    strcpy(this->args, args);
+    size = (strlen(args) + 1) * sizeof(char);
+    this->args = malloc(size);
+    strncpy(this->args, args, size);
 
     this->available = 0;
 }
 
-char* getName(Command* this) {
-    return this->name;
-}
-
-char* getDescr(Command* this) {
-    return this->descr;
-}
-
-char* getArgs(Command* this) {
-    return this->args;
-}
-
-void setAvailability(Command* this, bool b) {
-    this->available = b;
-}
-
-bool isAvailable(Command* this) {
-    return this->available;
-}
-
-char* getAsString(Command* this) {
-    char *str = NULL;
-    size_t size = strlen(this->getName(this)) 
-                + strlen(this->getArgs(this)) 
-                + strlen(this->getDescr(this))
-                + strlen("Command:  \nAvailable: \nDescription: ")
-                + 2; // '\0' and bool
-
-    printf("\nsize_t = %li\n", size);
-
-    str = calloc(1000 * sizeof(char), '\0');
-
-    if (str == NULL) {
-        printf("Deu merda parceiro.\n");
-    }
-
-    printf("BRUH:\nCommand: %s %s\nAvailable: %i\nDescription: %s\n", this->getName(this), this->getArgs(this), (int)this->isAvailable(this), this->getDescr(this));
-
-    snprintf(str, 1000, "Command: %s %s\nAvailable: %i\nDescription: %s", this->getName(this), this->getArgs(this), (int)this->isAvailable(this), this->getDescr(this));
-    
-    return str;
+void disposeCommand(Command* this) {
+    free(this->name);
+    free(this->descr);
+    free(this->args);
 }

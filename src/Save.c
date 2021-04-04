@@ -3,11 +3,36 @@
 #include <stdlib.h>
 #include <string.h>
 
-void initSave(Save* this, char* name, World w, int currPhase) {
-    this->name = malloc(sizeof(name) + sizeof(char));
-    strcpy(this->name, name);
+char* getName_Save(Save* this) {
+    return this->name;
+}
 
-    // make copy of world
+World* getWorld_Save(Save* this) {
+    return &this->w;
+}
+
+int getPhase_Save(Save* this) {
+    return this->currPhase;
+}
+
+void initSave(Save* this, char* name, World* w, int currPhase) {
+    size_t size = 0;
+    // Functions
+    this->getName = getName_Save;
+    this->getWorld = getWorld_Save;
+    this->getPhase = getPhase_Save;
+
+    size = (strlen(name) + 1) * sizeof(char);
+    this->name = malloc(size);
+    strncpy(this->name, name, size);
+
+    initWorld(&this->w);
+    copyWorld(&this->w, w);
 
     this->currPhase = currPhase;
+}
+
+void disposeSave(Save* this) {
+    disposeWorld(&this->w);
+    free(this->name);
 }
