@@ -24,7 +24,6 @@ void setConquered_Territory(Territory* this, bool b) {
 }
 
 bool isConquered_Territory(Territory* this) {
-    printf("cona tou aqui\n");
     return this->conquered;
 }
 
@@ -92,9 +91,7 @@ void initTerritory(Territory* this, int resistance, char* name, int prodGold, in
     this->prodProduct = prodProduct;
 
     this->timeConquered = 0;
-    this->isConquered = false;
-
-    this->print(this);
+    this->conquered = false;
 }
 
 void copyTerritory(Territory* dest, Territory* src) {
@@ -125,7 +122,7 @@ void copyTerritory(Territory* dest, Territory* src) {
     dest->prodProduct = src->prodProduct;
 
     dest->timeConquered = src->timeConquered;
-    dest->isConquered = src->isConquered;
+    dest->conquered = src->conquered;
 }
 
 void disposeTerritory(Territory* this) {

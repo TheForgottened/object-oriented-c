@@ -371,7 +371,7 @@ void print_Empire(Empire* this) {
         putchar('\n');
     }
 
-    printf("Territorios: %i", this->nrTerritories);
+    printf("Territories: %i", this->nrTerritories);
     this->printTerritories(this);
 }
 

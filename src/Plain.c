@@ -51,7 +51,7 @@ void initPlain(Plain* this) {
         return;
     }
 
-    snprintf(name, size, "Plain%i", (*this->count)++);
+    snprintf(name, size, "plain%i", (*this->count)++);
 
     initContinent((Continent*) this, 7, name, 1, 0);
 

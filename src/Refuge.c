@@ -37,7 +37,7 @@ void initRefuge(Refuge* this) {
         return;
     }
 
-    snprintf(name, size, "Refuge%i", (*this->count)++);
+    snprintf(name, size, "refuge%i", (*this->count)++);
 
     initIsland((Island*) this, 9, name, 0, 2);
 

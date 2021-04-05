@@ -51,7 +51,7 @@ void initMountain(Mountain* this) {
         return;
     }
 
-    snprintf(name, size, "Mountain%i", (*this->count)++);
+    snprintf(name, size, "mountain%i", (*this->count)++);
 
     initContinent((Continent*) this, 7, name, 1, 0);
 

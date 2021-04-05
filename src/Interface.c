@@ -236,11 +236,13 @@ errcode load_Interface(Interface* this, char* fileName) {
     code = FILE_BAD_FORMAT;
     breakFlag = true;
 
-    while (breakFlag && fscanf(f, "%[^\n]s", line) == 1) {
+    while (breakFlag && (fscanf(f, "%[^\n]s", line) != EOF)) {
+        line[strlen(line) - 1] = ' ';
         printf("bruh: -%s-\n", line);
         temp = splitString(line, " ", &tempSize);
         code = this->run(this, temp, tempSize);
         free(temp);
+        continue;
 
         switch (code) {
             case OK:
@@ -287,6 +289,7 @@ errcode load_Interface(Interface* this, char* fileName) {
     this->changeCMDAvailability(this, "fevent", true);
 #endif
 
+    fclose(f);
     return code;
 }
 
@@ -566,10 +569,10 @@ errcode run_Interface(Interface* this, char** input, int sizeInput) {
             }
 
             for (i = 0; i < this->nrSaves; i++) {
-                if (strcmp(this->saves[i].getName(&this->saves[i]), input[1])) {
+                if (strcmp(this->saves[i].getName(&this->saves[i]), input[1]) == 0) {
                     printf("\nAre you sure you want to replace the existing save (Y/N)? ");
 
-                    while(1) {
+                    while (1) {
                         scanf("%c", &c);
                         c = toupper(c);
 
@@ -591,6 +594,7 @@ errcode run_Interface(Interface* this, char** input, int sizeInput) {
                             phase = this->nextPhase + 1;
                         }
 
+                        disposeSave(&this->saves[i]);
                         initSave(&this->saves[i], input[1], this->w, phase);
 
                         return OK;
@@ -610,7 +614,7 @@ errcode run_Interface(Interface* this, char** input, int sizeInput) {
             }
 
             tempSave = NULL;
-            tempSave = realloc(this->saves, this->nrSaves + 1);
+            tempSave = realloc(this->saves, (this->nrSaves + 1) * sizeof(Save));
 
             if (tempSave == NULL) {
                 fprintf(stderr, "Error allocating memory for an array.\n");
@@ -631,7 +635,7 @@ errcode run_Interface(Interface* this, char** input, int sizeInput) {
             }
 
             for (i = 0; i < this->nrSaves; i++) {
-                if (strcmp(this->saves[i].getName(&this->saves[i]), input[1])) {
+                if (strcmp(this->saves[i].getName(&this->saves[i]), input[1]) == 0) {
                     printf("\nAre you sure you want to load the save %s? You'll lose every unsaved progress! (Y/N) ", input[1]);
                 
                     while(1) {
@@ -648,6 +652,7 @@ errcode run_Interface(Interface* this, char** input, int sizeInput) {
                     if (c == 'Y') {
                         printf("\nSave: %s loaded.\n", input[0]);
 
+                        disposeWorld(this->w);
                         copyWorld(this->w, this->saves[i].getWorld(&this->saves[i]));
                         this->nextPhase = this->saves[i].getPhase(&this->saves[i]);
 
@@ -658,6 +663,8 @@ errcode run_Interface(Interface* this, char** input, int sizeInput) {
                     }
                 }
             }
+            
+            return SAVE_NOT_FOUND;
             break;
 
         case 12: // delete
@@ -721,7 +728,7 @@ errcode run_Interface(Interface* this, char** input, int sizeInput) {
         
 #if DEBUG
         case 14: // take
-            if (sizeInput != 2 || (strcmp("tech", input[1]) != 0 && strcmp("terr", input[1]) != 0)) {
+            if (sizeInput < 3 || (strcmp("tech", input[1]) != 0 && strcmp("terr", input[1]) != 0)) {
                 printf("\nInstructions: %s %s\n", this->commands[cmd].getName(&this->commands[cmd]), this->commands[cmd].getArgs(&this->commands[cmd]));
                 return CMD_INVALID_ARGS;
             }

@@ -406,13 +406,10 @@ errcode printTerrInfo_World(World* this, char* tName) {
 
 void printFreeTerr_World(World* this) {
     int i;
-    this->territories[0]->print(this->territories[0]);
-    printf("buceeta tou aqui\n");
     
     for (i = 0; i < this->nrTerritories; i++) {
         if (this->territories[i]->isConquered(this->territories[i]) == false) {
             putchar('\n');
-            printf("caralho tou aqui\n");
             this->territories[i]->print(this->territories[i]);
         }
     }
@@ -500,7 +497,7 @@ void copyWorld(World* dest, World* src) {
 
     dest->nrTerritories = src->nrTerritories;
     dest->round = src->round;
-    // technologias and events aren't needed since they are declared in the constructor
+    // technologies and events aren't needed since they are declared in the constructor
 
     copyEmpire(&dest->emp, &src->emp);
 
@@ -512,9 +509,18 @@ void copyWorld(World* dest, World* src) {
         return;
     }
 
+    dest->territories = temp;
+
     for (i = 0; i < dest->nrTerritories; i++) {
         dest->territories[i] = src->territories[i]->clone(src->territories[i]);
+
+        if (dest->territories[i]->isConquered(dest->territories[i]) == true) {
+            dest->emp.rmTerrPtr(&dest->emp, src->territories[i]);
+            dest->emp.addTerr(&dest->emp, dest->territories[i]);
+        }
     }
+
+    dest->print(dest);
 }
 
 void disposeWorld(World* this) {
@@ -523,6 +529,7 @@ void disposeWorld(World* this) {
     if (this->territories != NULL) {
         for (i = 0; i < this->nrTerritories; i++) {
             disposeTerritory(this->territories[i]);
+            free(this->territories[i]);
         }
 
         free(this->territories);

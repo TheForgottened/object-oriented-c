@@ -26,7 +26,6 @@ void initSave(Save* this, char* name, World* w, int currPhase) {
     this->name = malloc(size);
     strncpy(this->name, name, size);
 
-    initWorld(&this->w);
     copyWorld(&this->w, w);
 
     this->currPhase = currPhase;
