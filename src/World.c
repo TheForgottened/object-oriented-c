@@ -49,7 +49,7 @@ void endGame_World(World* this) {
         if (this->getNTerr(this) == this->emp.getNTerr(&this->emp)) {
             strcat(str, "\nSupreme Emperor: +3 points");
         }
-        printf("\n\nbruh: %s\nacabou\n\n", str);
+
         snprintf(str + used, size - used, "\n\nFinal score: %i", points);
     }  
 

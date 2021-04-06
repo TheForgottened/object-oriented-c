@@ -11,7 +11,7 @@ WARNS := -Wall -Wextra -pedantic # -pedantic warns on language standards
 DEBUG := -g -fsanitize=address 
 
 # Flags for compiling
-CFLAGS := -O3 $(STACK) $(WARNS) $(DEBUG)
+CFLAGS := -O3 $(STACK) $(WARNS)
 
 # Color prefix for Linux distributions
 COLOR_PREFIX := e
