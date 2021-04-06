@@ -127,6 +127,9 @@ errcode conquestPhase_Interface(Interface* this) {
 
     while ((code = this->askForCommands(this)) == OK);
 
+    this->changeCMDAvailability(this, "conquer", false);
+    this->changeCMDAvailability(this, "skip", false);
+
     if (code == ATIVA || code == AVANCA) {
         return code;
     }
@@ -331,7 +334,8 @@ errcode changeCMDAvailability_Interface(Interface* this, char* cmd, bool b) {
 }
 
 errcode askForCommands_Interface(Interface* this) {
-    int i, inputSize = 0;
+    int i;
+    int inputSize = 0;
     char input[BUFFER_SIZE], **temp;
     errcode code;
 
@@ -377,7 +381,8 @@ errcode askForCommands_Interface(Interface* this) {
 
 errcode run_Interface(Interface* this, char** input, int sizeInput) {
     size_t size;
-    int i, cmd, luck, attackMilitaryForce, phase;
+    int i;
+    int cmd, luck, attackMilitaryForce, phase;
     char c;
     Save* tempSave;
     char* str = NULL;

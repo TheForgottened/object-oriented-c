@@ -226,6 +226,8 @@ errcode addTerr_Empire(Empire* this, Territory* newTerr) {
 
     this->territories = temp;
     this->territories[(this->nrTerritories)++] = newTerr;
+    newTerr->setConquered(newTerr, true);
+
     return OK;
 }
 
@@ -254,22 +256,25 @@ errcode rmTerrStr_Empire(Empire* this, char* t) {
 }
 
 errcode rmTerrPtr_Empire(Empire* this, Territory* t) {
-    int i;
+    int i, j;
     size_t size;
     Territory** temp;
-
     for (i = 0; i < this->nrTerritories; i++) {
         if (this->territories[i] == t) {
+            for (j = i; j < this->nrTerritories - 1; j++) {
+                this->territories[j] = this->territories[j + 1];
+            }
+
             size = (this->nrTerritories - 1) * sizeof(Territory *);
             temp = realloc(this->territories, size);
 
-            if (temp == NULL) {
+            if (temp == NULL && size != 0) {
                 fprintf(stderr, "Error allocating memory for territories array.");
                 return UNEXPECTED;
             }
 
-            temp[i] = this->territories[--(this->nrTerritories)];
             this->territories = temp;
+            (this->nrTerritories)--;
             return OK;
         }
     }
@@ -375,8 +380,7 @@ void print_Empire(Empire* this) {
     this->printTerritories(this);
 }
 
-void initEmpire(Empire* this) {
-    // Functions
+void defineMethods_Empire(Empire* this) {
     this->canAdd = canAdd_Empire;
     this->loseForce = loseForce_Empire;
     this->gather = gather_Empire;
@@ -406,7 +410,10 @@ void initEmpire(Empire* this) {
     this->printTerritories = printTerritories_Empire;
     this->printNameTech = printNameTech_Empire;
     this->print = print_Empire;
-    // End Functions
+}
+
+void initEmpire(Empire* this) {
+    defineMethods_Empire(this);
 
     this->territories = NULL;
     this->nrTerritories = 0;
@@ -425,7 +432,7 @@ void copyEmpire(Empire* dest, Empire* src) {
     size_t size;
     int i;
 
-    initEmpire(dest);
+    defineMethods_Empire(dest);
 
     dest->nrTerritories = src->nrTerritories;
     dest->nrTechnologies = src->nrTechnologies;

@@ -104,13 +104,13 @@ void copyTerritory(Territory* dest, Territory* src) {
     dest->setConquered = src->setConquered;
     dest->isConquered = src->isConquered;
     dest->getTimeConquered = src->getTimeConquered;
-    dest->getPoints = src->getPoints; // virtual
+    dest->getPoints = src->getPoints;
     dest->getGold = src->getGold;
     dest->getProduct = src->getProduct;
     dest->getName = src->getName;
     dest->refresh = src->refresh;
     dest->getResistance = src->getResistance;
-    dest->clone = src->clone; // virtual
+    dest->clone = src->clone;
     dest->print = src->print;
 
     size = (strlen(src->getName(src)) + 1) * sizeof(char);

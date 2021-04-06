@@ -58,6 +58,7 @@ void initInitialTerr(InitialTerr* this) {
 void copyInitialTerr(InitialTerr* dest, InitialTerr* src) {
     copyContinent((Continent*) dest, (Continent*) src);
 
+    dest->points = src->points;
     dest->count = src->count;
 }
 

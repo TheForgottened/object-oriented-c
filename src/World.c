@@ -7,7 +7,7 @@
 
 void endGame_World(World* this) {
     int points;
-    size_t size = 0;
+    size_t size = 0, used;
     char* str = NULL;
 
     if (this->emp.getNTerr(&this->emp) == 0) {
@@ -20,8 +20,8 @@ void endGame_World(World* this) {
     } else {
         points = this->emp.getSumPointsTerr(&this->emp) + this->emp.getSumPointsTech(&this->emp);
 
-        size = (strlen("The game ended.\n\nTerritories: + points\nTechnologies: + points\n\nPontuacao total final: ")
-                + 31) * sizeof(char); // 2 numbers and '\0'
+        size = (strlen("The game ended.\n\nTerritories: + points\nTechnologies: + points\n\nFinal score: ")
+                + 21) * sizeof(char); // 2 numbers and '\0'
 
         if (this->emp.getNTech(&this->emp) >= NR_TECHNOLOGIES) {
             size += (strlen("\nScientific bonus (own all technologies): +1 point")) * sizeof(char);
@@ -40,7 +40,7 @@ void endGame_World(World* this) {
             return;
         }
 
-        snprintf(str, size, "The game ended.\n\nTerritories: +%i points\nTechnologies: +%i points", this->emp.getSumPointsTerr(&this->emp), this->emp.getSumPointsTech(&this->emp));
+        used = snprintf(str, size, "The game ended.\n\nTerritories: +%i points\nTechnologies: +%i points", this->emp.getSumPointsTerr(&this->emp), this->emp.getSumPointsTech(&this->emp));
 
         if (this->emp.getNTech(&this->emp) >= NR_TECHNOLOGIES) {
             strcat(str, "\nScientific bonus (own all technologies): +1 point");
@@ -49,8 +49,8 @@ void endGame_World(World* this) {
         if (this->getNTerr(this) == this->emp.getNTerr(&this->emp)) {
             strcat(str, "\nSupreme Emperor: +3 points");
         }
-
-        snprintf(str, size, "%s\n\nPontuacao total final: %i", str, points);
+        printf("\n\nbruh: %s\nacabou\n\n", str);
+        snprintf(str + used, size - used, "\n\nFinal score: %i", points);
     }  
 
     this->infoEndGame(this, str);
@@ -422,6 +422,7 @@ void printAvailableTech_World(World* this) {
         if (!this->emp.hasTech(&this->emp, this->technologies[i].getName(&this->technologies[i]))) {
             putchar('\n');
             this->technologies[i].print(&this->technologies[i]);
+            putchar('\n');
         }
     }
 }
@@ -434,8 +435,7 @@ void print_World(World* this) {
     this->emp.print(&this->emp);
 }
 
-void initWorld(World* this) {
-    // Functions
+void defineMethods_World(World* this) {
     this->endGame = endGame_World;
     this->abandonedResource = abandonedResource_World;
     this->invasion = invasion_World;
@@ -468,22 +468,37 @@ void initWorld(World* this) {
     this->printFreeTerr = printFreeTerr_World;
     this->printAvailableTech = printAvailableTech_World;
     this->print = print_World;
+}
 
-    this->territories = NULL;
-    this->nrTerritories = 0;
-
+void defineEvents_World(World* this) {
     strncpy(this->events[0], "No Event", 24);
     strncpy(this->events[1], "Abandoned Resource", 24);
     strncpy(this->events[2], "Invasion", 24);
     strncpy(this->events[3], "Diplomatic Aliance", 24);
+}
 
+void defineTech_World(World* this) {
     initTech(&this->technologies[0], "Military Drones", 3, "Increases the maximum number of military force to 5.");
     initTech(&this->technologies[1], "Teleguided Missiles", 4, "Allows the conquest of islands.");
     initTech(&this->technologies[2], "Territorial Defenses", 4, "Increases the resistance of an invaded territory by 1.");
     initTech(&this->technologies[3], "Stock Exchange", 2, "Allows for trades between product and gold on the gathering phase.");
     initTech(&this->technologies[4], "Central Bank", 3, "Increases the empire's safe's and warehouse's capacity to 5.");
+}
 
+void initWorld(World* this) {
+    srand(time(NULL));
+
+    defineMethods_World(this);
+    defineEvents_World(this);
+    defineTech_World(this);
+    
     initEmpire(&this->emp);
+
+    this->territories = NULL;
+    this->nrTerritories = 0;
+
+    this->create(this, "initialterr", 1);
+    this->emp.addTerr(&this->emp, this->territories[0]);
 
     this->round = 1;
 }
@@ -493,11 +508,12 @@ void copyWorld(World* dest, World* src) {
     int i;
     size_t size;
 
-    initWorld(dest);
+    defineMethods_World(dest);
+    defineEvents_World(dest);
+    defineTech_World(dest);
 
     dest->nrTerritories = src->nrTerritories;
     dest->round = src->round;
-    // technologies and events aren't needed since they are declared in the constructor
 
     copyEmpire(&dest->emp, &src->emp);
 
@@ -514,13 +530,11 @@ void copyWorld(World* dest, World* src) {
     for (i = 0; i < dest->nrTerritories; i++) {
         dest->territories[i] = src->territories[i]->clone(src->territories[i]);
 
-        if (dest->territories[i]->isConquered(dest->territories[i]) == true) {
+        if (dest->territories[i]->isConquered(dest->territories[i])) {
             dest->emp.rmTerrPtr(&dest->emp, src->territories[i]);
             dest->emp.addTerr(&dest->emp, dest->territories[i]);
         }
     }
-
-    dest->print(dest);
 }
 
 void disposeWorld(World* this) {
