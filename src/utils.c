@@ -5,11 +5,13 @@
 #include <stdlib.h>
 
 char** splitString(char* str, char* delim, int* size) {
-    char **out = NULL, **temp = NULL, *next;
+    char **out = NULL, **temp = NULL, *token;
 
     *size = 0;
 
-    while((next = strsep(&str, delim)) != NULL && strlen(next) > 0) {
+    token = strtok(str, delim);
+
+    while(token != NULL) {
         temp = realloc(out, sizeof(char*) * ((*size) + 1));
 
         if (temp == NULL) {
@@ -18,7 +20,9 @@ char** splitString(char* str, char* delim, int* size) {
         }
 
         out = temp;
-        out[(*size)++] = next;
+        out[(*size)++] = token;
+
+        token = strtok(NULL, delim);
     }
 
     return out;
