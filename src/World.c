@@ -394,7 +394,7 @@ errcode printTerrInfo_World(World* this, char* tName) {
     int i;
 
     for (i = 0; i < this->nrTerritories; i++) {
-        if (strcmp(this->territories[i]->getName(this->territories[i]), tName)) {
+        if (strcmp(this->territories[i]->getName(this->territories[i]), tName) == 0) {
             this->territories[i]->print(this->territories[i]);
             return OK;
         }

@@ -142,7 +142,7 @@ bool hasTech_Empire(Empire* this, char* name) {
     int i;
 
     for (i = 0; i < this->nrTechnologies; i++) {
-        if (strcmp(this->technologies[i]->getName(this->technologies[i]), name)) {
+        if (strcmp(this->technologies[i]->getName(this->technologies[i]), name) == 0) {
             return true;
         }
     }

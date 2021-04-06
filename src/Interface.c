@@ -679,7 +679,7 @@ errcode run_Interface(Interface* this, char** input, int sizeInput) {
             }
 
             for (i = 0; i < this->nrSaves; i++) {
-                if (strcmp(this->saves[i].getName(&this->saves[i]), input[1])) {
+                if (strcmp(this->saves[i].getName(&this->saves[i]), input[1]) == 0) {
                     printf("\nAre you sure you want to delete the save %s (Y/N)? ", input[1]);
                 
                     while (1) {
