@@ -241,7 +241,7 @@ errcode rmTerrStr_Empire(Empire* this, char* t) {
             size = (this->nrTerritories - 1) * sizeof(Territory *);
             temp = realloc(this->territories, size);
 
-            if (temp == NULL) {
+            if (temp == NULL && size != 0) {
                 fprintf(stderr, "Error allocating memory for territories array.");
                 return UNEXPECTED;
             }

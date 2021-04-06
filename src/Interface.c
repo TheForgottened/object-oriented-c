@@ -239,13 +239,16 @@ errcode load_Interface(Interface* this, char* fileName) {
     code = FILE_BAD_FORMAT;
     breakFlag = true;
 
-    while (breakFlag && (fscanf(f, "%[^\n]s", line) != EOF)) {
-        line[strlen(line) - 1] = ' ';
-        printf("bruh: -%s-\n", line);
+    while (breakFlag && (fgets(line, BUFFER_SIZE, f) != NULL)) {
+        if (line[strlen(line) - 1] == '\n') {
+            line[strlen(line) - 1] = ' ';
+        }
+        
         temp = splitString(line, " ", &tempSize);
         code = this->run(this, temp, tempSize);
+
+        resetString(line);
         free(temp);
-        continue;
 
         switch (code) {
             case OK:
@@ -619,7 +622,8 @@ errcode run_Interface(Interface* this, char** input, int sizeInput) {
             }
 
             tempSave = NULL;
-            tempSave = realloc(this->saves, (this->nrSaves + 1) * sizeof(Save));
+            size = (this->nrSaves + 1) * sizeof(Save);
+            tempSave = realloc(this->saves, size);
 
             if (tempSave == NULL) {
                 fprintf(stderr, "Error allocating memory for an array.\n");
@@ -698,8 +702,9 @@ errcode run_Interface(Interface* this, char** input, int sizeInput) {
 
                         tempSave = NULL;
                         size = (this->nrSaves - 1) * sizeof(Save);
+                        tempSave = realloc(this->saves, size);
 
-                        if (tempSave == NULL) {
+                        if (tempSave == NULL && size != 0) {
                             fprintf(stderr, "Error allocating memory for saves array.");
                             return UNEXPECTED;
                         }
