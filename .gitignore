@@ -58,4 +58,7 @@ dkms.conf
 # VS Code config folder that automatically generates and it's annoying (added by me)
 .vscode/
 
+# Log file I used to make it easier to track the errors the compiler was giving
+log.txt
+
 # End of https://www.toptal.com/developers/gitignore/api/c
