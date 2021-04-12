@@ -5,7 +5,7 @@ During the project I realized that the way I did things didn't exactly compile i
 # References
 
 | Title | Author | URL | Comments |
-| --- | --- | --- | --- |
+| --- | :---: | :---: | ---: |
 | Object Oriented Programming in C | Laurent Deniau | http://ldeniau.web.cern.ch/ldeniau/html/oopc/oopc.html | Since I intended to do everything by myself, I really didn't use the library, only the knownledge shared |
 | The C Object Oriented Programming Library | Shmuel Fine | https://github.com/ShmuelFine/COOP | Since I intended to do everything by myself, I really didn't use the library, only the knownledge shared |
 | Alternative idioms for inheritance in C | Dan Saks | https://www.embedded.com/alternative-idioms-for-inheritance-in-C/ | This helps understand how C++ works on the backend |
