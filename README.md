@@ -12,6 +12,7 @@ Feel free to contribute.
 
 - [Object-oriented C](#object-oriented-c)
 - [Table of Contents](#table-of-contents)
+- [Learn More](#learn-more)
 - [ISEC Total War](#isec-total-war)
   - [Phases](#phases)
   - [Input](#input)
@@ -19,6 +20,10 @@ Feel free to contribute.
   - [Final Score](#final-score)
 - [Compiling](#compiling)
 - [License](#license)
+
+# Learn More
+
+You can learn more about the subject [here](LEARNMORE.md).
 
 # ISEC Total War
 
@@ -65,4 +70,4 @@ Also, if you're a Windows user you can't have `$(DEBUG)` in the `CFLAGS` variabl
 
 # License
 
-Licensed under the [GPLv3](./LICENSE) license.
+Licensed under the [GPLv3](LICENSE) license.
